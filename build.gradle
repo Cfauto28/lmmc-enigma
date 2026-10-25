@@ -36,7 +36,7 @@ subprojects {
 	version = '2.7.2'
 
 	var ENV = System.getenv()
-	version = version + (ENV.GITHUB_ACTIONS ? (ENV.SNAPSHOTS_URL ? "-SNAPSHOT" : "") : "+local")
+	version = version + "-lmmc" + (ENV.GITHUB_ACTIONS ? (ENV.SNAPSHOTS_URL ? "-SNAPSHOT" : "") : "+local")
 
 	java {
 		withSourcesJar()

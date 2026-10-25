@@ -54,6 +54,9 @@ import org.quiltmc.enigma.gui.dialog.ProgressDialog;
 import org.quiltmc.enigma.gui.docker.ClassesDocker;
 import org.quiltmc.enigma.gui.docker.CollabDocker;
 import org.quiltmc.enigma.gui.docker.Docker;
+import org.quiltmc.enigma.gui.lmmc.DescriptionProvider;
+import org.quiltmc.enigma.gui.lmmc.LegacyMappingsDescriptionProvider;
+import org.quiltmc.enigma.gui.lmmc.LegacyModdingExtensions;
 import org.quiltmc.enigma.gui.network.IntegratedEnigmaClient;
 import org.quiltmc.enigma.gui.network.IntegratedEnigmaServer;
 import org.quiltmc.enigma.gui.util.History;
@@ -101,6 +104,8 @@ public class GuiController implements ClientPacketHandler {
 	private IndexTreeBuilder indexTreeBuilder;
 	private StatsGenerator statsGenerator;
 
+	private DescriptionProvider extraDescriptionProvider = new DescriptionProvider(){};
+
 	private Path loadedMappingPath;
 	private ReadWriteService readWriteService;
 
@@ -118,6 +123,10 @@ public class GuiController implements ClientPacketHandler {
 		this.enigma = Enigma.builder()
 				.setProfile(profile)
 				.build();
+
+		if (LegacyModdingExtensions.isEnabled()) {
+			this.extraDescriptionProvider = new LegacyMappingsDescriptionProvider();
+		}
 	}
 
 	public boolean isDirty() {
@@ -171,6 +180,8 @@ public class GuiController implements ClientPacketHandler {
 			try {
 				EntryTree<EntryMapping> mappings = readWriteService.read(path);
 				this.project.setMappings(mappings, progress);
+
+				this.extraDescriptionProvider.setMappings(path);
 
 				this.readWriteService = readWriteService;
 				this.loadedMappingPath = path;
@@ -666,6 +677,10 @@ public class GuiController implements ClientPacketHandler {
 
 	public Enigma getEnigma() {
 		return this.enigma;
+	}
+
+	public DescriptionProvider getExtraDescriptionProvider() {
+		return this.extraDescriptionProvider;
 	}
 
 	@Nullable
