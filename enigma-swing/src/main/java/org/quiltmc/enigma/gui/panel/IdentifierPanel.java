@@ -181,17 +181,17 @@ public class IdentifierPanel {
 
 			if (this.entry instanceof ClassEntry ce) {
 				this.addExtraProperties(th, this.gui.getController().getExtraDescriptionProvider()
-					.getClassProperties(ce.getFullName()));
+						.getClassProperties(ce.getFullName()));
 			} else if (this.entry instanceof FieldEntry fe) {
 				this.addExtraProperties(th, this.gui.getController().getExtraDescriptionProvider()
-					.getFieldProperties(fe.getParent().getFullName(), fe.getName(), fe.getDesc().toString()));
+						.getFieldProperties(fe.getParent().getFullName(), fe.getName(), fe.getDesc().toString()));
 			} else if (this.entry instanceof MethodEntry me) {
 				this.addExtraProperties(th, this.gui.getController().getExtraDescriptionProvider()
-					.getMethodProperties(me.getParent().getFullName(), me.getName(), me.getDesc().toString()));
+						.getMethodProperties(me.getParent().getFullName(), me.getName(), me.getDesc().toString()));
 			} else if (this.entry instanceof LocalVariableEntry lve) {
 				if (lve.isArgument()) {
 					this.addExtraProperties(th, this.gui.getController().getExtraDescriptionProvider()
-						.getArgumentProperties(lve.getParent().getParent().getFullName(), lve.getParent().getName(),
+							.getArgumentProperties(lve.getParent().getParent().getFullName(), lve.getParent().getName(),
 							lve.getParent().getDesc().toString(), lve.getName()));
 				}
 			}
