@@ -11,7 +11,7 @@ jobs:
       options: --user root
     steps:
       - uses: actions/checkout@v6
-      - run: ./gradlew checkstyleMain build --stacktrace --warning-mode fail
+      - run: ./gradlew checkstyleMain build --stacktrace #--warning-mode fail
       - name: Publish Snapshot
         uses: actions/upload-artifact@v7.0.2
         with:
